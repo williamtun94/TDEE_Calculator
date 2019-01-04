@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Untitled Form</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+
+</head>
+<body id="main_body" >
+	
+	<img id="top" src="top.png" alt="">
+	<div id="form_container">
+	
+		<h1><a>TDEE Calculator</a></h1>
+		<form id="form_43133" class="appnitro"  method="post" action="">
+					<div class="form_description">
+			<h2>TDEE Calculator (by Kyaw WY Tun)</h2>
+			<p>Hi Welcome! You can calcuate your total daily energy expenditure here.</p>
+		</div>						
+			<ul >
+			
+					<li id="li_0" >
+		<label class="description" for="element_5">Gender </label>
+		<span>
+<input id="element5_1" name="genderS" class="element radio" type="radio" checked = "checked" value="1" />
+<label class="choice" for="element_5_1">Male</label>
+<input id="element_5_2" name="genderS" class="element radio" type="radio" value="2" />
+<label class="choice" for="element_5_2">Female</label>
+
+		</span> 
+		</li>		<li id="li_1" >
+		<label class="description" for="element_1">Age </label>
+		<div>
+			<input id="num_age" name="element_1" class="element text small" type="text" maxlength="2" value="25"/> 
+		</div> 
+		</li>		<li id="li_2" >
+		<label class="description" for="element_2">Height (inches) </label>
+		<div>
+			<input id="num_height" name="element_2" class="element text small" type="text" maxlength="2" value="68"/> 
+		</div> 
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Weight (pounds) </label>
+		<div>
+			<input id="num_weight" name="element_3" class="element text small" type="text" maxlength="3" value="160"/> 
+		</div> 
+		</li>		<li id="li_4" >
+		<label class="description" for="element_6">Activity Level </label>
+		<span>
+<input id="element_6_1" name="rdo_activitylevel" class="element radio" type="radio" checked = "checked" value="1" />
+<label class="choice" for="element_6_1">Sedentary (little to no exercise)</label>
+<input id="element_6_2" name="rdo_activitylevel" class="element radio" type="radio" value="2" />
+<label class="choice" for="element_6_2">Light Active (exercise 1-2 days a week)</label>
+<input id="element_6_3" name="rdo_activitylevel" class="element radio" type="radio" value="3" />
+<label class="choice" for="element_6_3">Moderately Active (exercise 3-4 days a week)</label>
+<input id="element_6_4" name="rdo_activitylevel" class="element radio" type="radio" value="4" />
+<label class="choice" for="element_6_4">Very Active (exercise 5-7 days a week)</label>
+
+		</span> 
+	
+			
+					<li class="buttons">   
+	<input type="submit" name="btn_calculate" value="Calculate!" onclick="calculate(); return false;">
+					<p id="output"></p>
+		</li>
+			</ul>
+
+		</form>	
+		
+	</div>
+	<img id="bottom" src="bottom.png" alt="">
+
+<script>
+function calculate(){
+	if (isNaN(document.getElementById("num_age").value)){
+		document.getElementById("output").innerHTML = "Age must be number";
+	} else if (isNaN(document.getElementById("num_height").value)){
+		document.getElementById("output").innerHTML = "Height must be number";
+	} else if (isNaN(document.getElementById("num_weight").value)){
+		document.getElementById("output").innerHTML = "Weight must be number";
+	} else{
+
+	const age = document.getElementById("num_age").value;
+	const height = document.getElementById("num_height").value;
+	const weight = document.getElementById("num_weight").value;
+	const genderCode = Array.from(document.getElementsByName("genderS")).find(r => r.checked).value;
+	const activityLevelCode = Array.from(document.getElementsByName("rdo_activitylevel")).find(r => r.checked).value;
+	const gender = genderCode === "1" ? "Male" : "Female";
+	let activityLevel = 0;
+	if (activityLevelCode === "1"){
+		activityLevel = 1.1;}
+	else if (activityLevelCode === "2"){
+		activityLevel = 1.275;
+	}else if (activityLevelCode === "3"){
+		activityLevel = 1.35;
+	}else{
+		activityLevel = 1.525;
+	}			 
+	
+	bmr = gender === "Male" ? (height * 2.54 * 6.25)  + (weight * 0.453592 * 9.99) - (age * 4.92) + 5 : (height * 2.54 * 6.25)  + (weight * 0.453592 * 9.99) - (age * 4.92) - 161;
+	const tdee = bmr * activityLevel;
+
+	//document.getElementById("output").innerHTML="Your age is " + age + height + weight + gender + activityLevelCode + activityLevel + "Your BMR is " + bmr + "Your TDEE is " + tdee;
+
+	document.getElementById("output").innerText = "Your BMR is " + bmr + "." + "\n" + "Your TDEE is " + tdee + ".";
+	}
+
+}
+</script>
+
+	</body>
+
+
+</html>
